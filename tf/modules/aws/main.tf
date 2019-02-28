@@ -120,12 +120,12 @@ resource "aws_eip" "f5_mgmt" {
 
 }
 
-resource "aws_eip" "vs1_eip" {
-  vpc      = true
-  network_interface         = "${aws_network_interface.bigip_external_interface.id}"
-  associate_with_private_ip = "${var.vs_1}"
-
-}
+# resource "aws_eip" "vs1_eip" {
+#   vpc      = true
+#   network_interface         = "${aws_network_interface.bigip_external_interface.id}"
+#   associate_with_private_ip = "${var.vs_1}"
+#
+# }
 
 resource "aws_network_interface" "bigip_external_interface" {
   subnet_id       = "${var.external_subnet_id}"
