@@ -5,13 +5,14 @@ provider "aws" {
 }
 
 #### Commerical AWS provider for Route53 ####
-provider "aws" {
-  alias = "${var.provider_alias}"
-  region = "${var.alt_region}"
-  access_key = "${var.alt_aws_access_key}"
-  secret_key = "${var.alt_aws_secret_key}"
-
-}
+## to utilize this, you will need to uncomment the cooresponding variables in variables.tf
+#provider "aws" {
+#  alias = "${var.provider_alias}"
+#  region = "${var.alt_region}"
+#  access_key = "${var.alt_aws_access_key}"
+#  secret_key = "${var.alt_aws_secret_key}"
+#
+#}
 
 ### Security Group (Firewall) rules ###
 
