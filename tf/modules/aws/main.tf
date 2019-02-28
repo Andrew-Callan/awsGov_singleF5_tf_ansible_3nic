@@ -166,3 +166,22 @@ resource "aws_instance" "bigip_standalone" {
 
   }
 }
+
+
+#resource "aws_route53_record" "f5_dns" {
+#  provider = "aws.${var.provider_alias}"
+#  zone_id = "${var.dns_zone}"
+#  name    = "${var.dns_name}"
+#  type    = "A"
+#  ttl     = "300"
+#  records = ["${aws_instance.bigip_standalone.public_ip}"]
+#}
+
+#resource "aws_route53_record" "f5_vs1_dns" {
+#  provider = "aws.${var.provider_alias}"
+#  zone_id = "${var.dns_zone}"
+#  name    = "govoseapp1"
+#  type    = "A"
+#  ttl     = "300"
+#  records = ["${aws_eip.vs1_eip.public_ip}"]
+#}
