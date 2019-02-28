@@ -1,0 +1,15 @@
+---
+
+ansible_python_interpreter: #path to virtual env which has python interpreter and needed f5 modules installed (e.g. /Users/jonathanspigler/.ansible/workspace/f5ansible/bin/python)
+
+license_key: #license key
+
+provider:
+  password: #password for big ip
+  server: # dns hostname or public ip of big ip
+  user: #username with admin privs used to access big ip
+  validate_certs: no
+  server_port: 443
+
+external_selfip: #external_ip
+internal_selfip: #internal_selfip

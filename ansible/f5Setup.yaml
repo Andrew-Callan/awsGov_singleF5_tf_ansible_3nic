@@ -1,0 +1,75 @@
+---
+  - name: big ip information
+    hosts: bigips
+    connection: local
+
+    tasks:
+      - name: License BIG-IP using a key
+        bigip_device_license:
+            provider: "{{ provider }}"
+            license_key: "{{ license_key }}"
+            accept_eula: yes
+        delegate_to: localhost
+
+      - name: Add VLAN external as untagged to interface 1.1
+        bigip_vlan:
+            untagged_interface: 1.1
+            name: "external"
+            provider: "{{ provider }}"
+        delegate_to: localhost
+
+
+      - name: Add VLAN internal as tagged to interface 1.2
+        bigip_vlan:
+            untagged_interface: 1.2
+            name: "internal"
+            provider: "{{ provider }}"
+        delegate_to: localhost
+
+
+      - name: Create External Self IP
+        bigip_selfip:
+          address: "{{ external_selfip }}"
+          name: externalSelfIP
+          netmask: 255.255.255.0
+          provider: "{{ provider }}"
+          vlan: external
+          state: present
+        delegate_to: localhost
+
+
+      - name: Create Internal Self IP
+        bigip_selfip:
+          address: "{{ internal_selfip }}"
+          name: internalSelfIP
+          netmask: 255.255.255.0
+          provider: "{{ provider }}"
+          vlan: internal
+          state: present
+          allow_service:
+            - all
+        delegate_to: localhost
+
+
+
+#tmsh create net tunnel vxlan ose-vxlan {app-service none flooding-type multipoint}
+
+      - name:  disable setup gui
+        bigip_command:
+          commands: "{{ item }}"
+          provider:
+            "{{ provider }}"
+        with_items:
+          - modify sys global-settings gui-setup disabled
+        delegate_to: localhost
+
+#tmsh save sys config
+
+      - name: Run Tmsh save config
+        bigip_command:
+          commands: "{{ item }}"
+          provider:
+            "{{ provider }}"
+        with_items:
+          - tmsh save sys config
+        delegate_to: localhost
