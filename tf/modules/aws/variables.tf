@@ -19,5 +19,4 @@ variable "az" { default = ""}
 variable "external_ip" { default = "" }
 variable "internal_ip" { default = "" }
 #variable "dns_zone" { default = "" }
-#variable "dns_app_zone" {default = "" }
 #variable "dns_name" {default = ""}
