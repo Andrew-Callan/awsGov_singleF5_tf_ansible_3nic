@@ -35,7 +35,8 @@ After you have been able to deploy the above successfully, try adding a pool, th
 
 Try then adding a virtual server to connect to that pool.  In order to do this, you first need to update your terraform plan to add a secondary ip to your external interface.   Focus on the following  code block
 
-```resource "aws_network_interface" "bigip_external_interface" {
+```
+  resource "aws_network_interface" "bigip_external_interface" {
   subnet_id       = "${var.external_subnet_id}"
   private_ips     = ["${var.external_ip}"]
   security_groups = ["${aws_security_group.f5_mgmt_https.id}"]
@@ -43,7 +44,8 @@ Try then adding a virtual server to connect to that pool.  In order to do this, 
     instance     = "${aws_instance.bigip_standalone.id}"
     device_index = 1
   }
-}```
+}
+```
 
 You'll want to add the  ip in the  private_ips array.  This can be  done statically in the main.tf file or you can add another variable to  variables.tf  and reference  it.  (I suggest variables.tf.  IaC is all about modularity and not tightly coupling configurations.  Variables are super powerful to change alot of things infrastructurely, but only having to change a value in one place )
 
@@ -51,12 +53,14 @@ You may need to also add another EIP depending on your environment
 
 e.g.
 
-```resource "aws_eip" "vs1_eip" {
+```
+resource "aws_eip" "vs1_eip" {
   vpc      = true
   network_interface         = "${aws_network_interface.bigip_external_interface.id}"
   associate_with_private_ip = "${var.vs_1}" <-- this variable would also be in your private_ips array in the bigip_external_interface resource mentioned above
 
-}```
+}
+```
 
 Save and re apply your terraform plan "terraform apply --auto-approve"
 
