@@ -15,19 +15,22 @@ To prep terraform:
 
 To run terraform:
 Start in the directory awsGov_singleF5_tf_ansible_3nic
+```
 1. cd tf
 2. run terraform init (this will initiate the terraform plan )
 3. terraform apply --auto-approve
 4. After the plan has run successfully, you will need to log into the deployed big ip via the ssh key you generated and change the admin password and/or create an account with admin privileges which will be used by ansible to make TMOS level configurations
+```
 
 To run ansible:
+```
 1. cd ../ansible
 2. update the variables in group_vars/bigips.yaml to suite your environment
 3. the hosts file should stay unchanged as "localhost" being the only listed host.  F5's ansible modules interacts with BigIps iControl interface over https unlike a majority of modules which use SSH.
 4. the ansible.cfg file should stay the same also, but feel free review this file and see all configurations which can be altered.  A majority are commented out using the default setting
 5. run the ansible playbook with the following command "ansible-playbook f5Setup.yaml" watch your big-ip get configured!
 6. once the playbook finishes deploying, you should have a bigip fully licensed and configured with selfips
-
+```
 
 This is a very very very basic deployment example which doesn't even begin to scratch the surface of what is possible when you use IaC "Infrastructure as Code".  But use this simple example as a spring board to grow your knowledge of using these platforms and coded infrastructure.  
 
